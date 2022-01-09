@@ -1,7 +1,7 @@
-import { HStack, Icon, IconButton, Text } from "native-base";
 import React from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { addDays, format, isToday } from "date-fns";
+import { Button, Icon, Text } from "@ui-kitten/components";
+import { View } from "react-native";
 
 export function DateSelector({
   date,
@@ -12,29 +12,26 @@ export function DateSelector({
 }) {
   const isDateToday = isToday(date);
   return (
-    <HStack
-      justifyContent={"space-around"}
-      alignItems={"center"}
-      width={"100%"}
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center",
+        width: "100%",
+      }}
     >
-      <IconButton
+      <Button
         onPress={() => onDateChange(addDays(date, -1))}
-        icon={<Icon as={MaterialCommunityIcons} name="arrow-left" />}
+        size={"icon"}
+        accessoryLeft={<Icon name="arrow-ios-back-outline" />}
       />
-      <Text fontSize={"2xl"} italic>
-        {format(date ?? new Date(), "MMMM dd")}
-      </Text>
-      <IconButton
+      <Text category={"h3"}>{format(date ?? new Date(), "MMMM dd")}</Text>
+      <Button
         disabled={isDateToday}
+        size={"icon"}
         onPress={() => onDateChange(addDays(date, 1))}
-        icon={
-          <Icon
-            as={MaterialCommunityIcons}
-            name="arrow-right"
-            color={isDateToday ? "gray.400" : "black"}
-          />
-        }
+        accessoryLeft={<Icon name="arrow-ios-forward-outline" />}
       />
-    </HStack>
+    </View>
   );
 }

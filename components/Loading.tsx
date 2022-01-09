@@ -1,10 +1,17 @@
 import React from "react";
 import LottieView from "lottie-react-native";
-import { Box, Text, View } from "native-base";
+import { View } from "react-native";
+import { Text } from "@ui-kitten/components";
 
 export function Loading() {
   return (
-    <Box>
+    <View
+      style={{
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <LottieView
         source={require("../assets/bee.json")}
         autoPlay
@@ -15,9 +22,7 @@ export function Loading() {
         resizeMode="contain"
         loop={false}
       />
-      <Text bold fontSize="2xl" color={"gray.900"} textAlign="center">
-        Loading...
-      </Text>
-    </Box>
+      <Text category={"h3"}>Loading...</Text>
+    </View>
   );
 }

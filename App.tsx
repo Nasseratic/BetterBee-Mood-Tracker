@@ -1,56 +1,64 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
-import { NativeBaseProvider, Box, extendTheme } from "native-base";
+// import { NativeBaseProvider, Box, extendTheme } from "native-base";
 import { Mood } from "./Screen/Mood";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { scheduleNotification } from "./utils/notifications";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import * as eva from "@eva-design/eva";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { customMapping, myTheme } from "./theme";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import { Story } from "./Screen/Story";
+import AsyncStorageLib from "@react-native-async-storage/async-storage";
+import { match } from "ts-pattern";
+import { Loading } from "./components/Loading";
 
 const queryClient = new QueryClient();
 
-const theme = extendTheme({
-  colors: {
-    // Add new color
-    primary: {
-      50: "#fff8e1",
-      100: "#ffecb3",
-      200: "#ffe082",
-      300: "#ffd54f",
-      400: "#ffca28",
-      500: "#ffc107",
-      600: "#ffb300",
-      700: "#ffa000",
-      800: "#ff8f00",
-      900: "#ff6f00",
-    },
-  },
-  components: {
-    IconButton: {
-      baseStyle: {
-        borderRadius: 100,
-      },
-    },
-  },
-});
-
 export default function App() {
+  const [isStory, setIsStory] = useState<boolean | null>(null);
   useEffect(() => {
     scheduleNotification();
+    AsyncStorageLib.getItem("story").then((story) => {
+      if (!!story) {
+        setIsStory(true);
+      } else setIsStory(false);
+    });
   }, []);
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <NativeBaseProvider theme={theme}>
+      <IconRegistry icons={EvaIconsPack} />
+
+      <ApplicationProvider
+        {...eva}
+        theme={myTheme}
+        mapping={eva.mapping}
+        customMapping={customMapping}
+      >
         <QueryClientProvider client={queryClient}>
           <SafeAreaProvider>
             <SafeAreaView>
-              <Mood />
+              {match(isStory)
+                .with(null, () => <Loading />)
+                .with(false, () => (
+                  <Story
+                    onStart={() => {
+                      AsyncStorageLib.setItem("story", "true");
+                      setIsStory(true);
+                    }}
+                  />
+                ))
+                .otherwise(() => (
+                  <Mood />
+                ))}
             </SafeAreaView>
           </SafeAreaProvider>
         </QueryClientProvider>
-      </NativeBaseProvider>
+      </ApplicationProvider>
     </View>
   );
 }

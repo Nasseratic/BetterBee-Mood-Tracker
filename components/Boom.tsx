@@ -1,23 +1,29 @@
 import React from "react";
 import LottieView from "lottie-react-native";
-import { Box, HStack, Text, View, VStack } from "native-base";
+import { View } from "react-native";
+import { Text } from "@ui-kitten/components";
 
 export function Boom() {
   return (
-    <VStack justifyContent={"center"} alignItems={"center"} mt={5}>
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 5,
+      }}
+    >
       <LottieView
-        source={require("../assets/bomb.json")}
+        source={require("../assets/boom.json")}
         autoPlay
         style={{
-          width: 200,
-          height: 200,
+          width: 300,
+          height: 300,
         }}
+        speed={0.7}
         loop
         resizeMode="contain"
       />
-      <Text bold fontSize="3xl" mt={5} color={"gray.900"} textAlign={"center"}>
-        Emergency! 🏃
-      </Text>
-    </VStack>
+      <Text category={"h1"}>Emergency!</Text>
+    </View>
   );
 }

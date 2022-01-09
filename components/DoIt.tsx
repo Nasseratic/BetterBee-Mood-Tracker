@@ -1,10 +1,17 @@
 import React from "react";
 import LottieView from "lottie-react-native";
-import { Box, HStack, Text, View, VStack } from "native-base";
+import { View } from "react-native";
+import { Text } from "@ui-kitten/components";
 
 export function DoIt() {
   return (
-    <VStack justifyContent={"center"} alignItems={"center"} mt={5}>
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 5,
+      }}
+    >
       <LottieView
         source={require("../assets/doit.json")}
         autoPlay
@@ -15,9 +22,7 @@ export function DoIt() {
         loop={false}
         resizeMode="contain"
       />
-      <Text bold fontSize="3xl" mt={5} color={"gray.900"} textAlign={"center"}>
-        Just do it 💪
-      </Text>
-    </VStack>
+      <Text category={"h2"}>Just do it 💪</Text>
+    </View>
   );
 }

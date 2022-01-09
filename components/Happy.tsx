@@ -1,35 +1,45 @@
 import React from "react";
 import LottieView from "lottie-react-native";
-import { Box, HStack, Text, View, VStack } from "native-base";
+import { View } from "react-native";
+import { Text } from "@ui-kitten/components";
 
 export function Happy() {
   return (
-    <VStack justifyContent={"center"} alignItems={"center"} mt={5}>
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 5,
+      }}
+    >
       <LottieView
         source={require("../assets/happy.json")}
         autoPlay
         style={{
-          width: 140,
-          height: 140,
+          width: 260,
+          height: 260,
         }}
         loop={false}
         resizeMode="contain"
       />
-      <HStack alignItems={"center"} justifyContent={"center"} mr={-35}>
-        <Text bold fontSize="4xl" color={"gray.900"} mr={-3}>
-          The Queen!
-        </Text>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text category={"h2"}>You are amazing!</Text>
         <LottieView
           source={require("../assets/heart.json")}
           autoPlay
           style={{
-            width: 70,
-            height: 70,
+            width: 90,
+            height: 90,
           }}
           resizeMode="contain"
           loop={true}
         />
-      </HStack>
-    </VStack>
+      </View>
+    </View>
   );
 }

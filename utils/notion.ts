@@ -5,7 +5,7 @@ import { match, not, select, __ } from "ts-pattern";
 
 // Initializing a client
 export const notionSDK = new Client({
-  auth: process.env.NOTION_TOKEN,
+  auth: "secret_",
 });
 
 export const createMoodLog = async ({
